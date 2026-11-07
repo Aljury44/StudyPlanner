@@ -1,3 +1,4 @@
+
 package com.example.studyplanner
 
 import androidx.compose.foundation.layout.Arrangement
@@ -16,20 +17,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-// UI State
 data class PlannerUiState(
     val greeting: String = "Welcome, Aljury!",
     val totalTasks: Int = 5,
     val completedTasks: Int = 0
 )
 
-// Stateless Screen
 @Composable
 fun PlannerHomeScreen(
     uiState: PlannerUiState,
     onCompleteTask: () -> Unit,
+    onTaskClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val tasks = listOf(
+        "Study Kotlin",
+        "Complete Android Lab",
+        "Review Lecture Notes"
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -61,12 +67,24 @@ fun PlannerHomeScreen(
         ) {
             Text("Complete a Task")
         }
+
+        Text(
+            text = "Study Tasks",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        tasks.forEach { task ->
+            Button(onClick = { onTaskClick(task) }) {
+                Text(task)
+            }
+        }
     }
 }
 
-// Route owns the state
 @Composable
-fun PlannerHomeRoute() {
+fun PlannerHomeRoute(
+    onTaskClick: (String) -> Unit = {}
+) {
     var uiState by remember {
         mutableStateOf(PlannerUiState())
     }
@@ -79,15 +97,12 @@ fun PlannerHomeRoute() {
                     completedTasks = uiState.completedTasks + 1
                 )
             }
-        }
+        },
+        onTaskClick = onTaskClick
     )
 }
 
-// Preview 1
-@Preview(
-    showBackground = true,
-    name = "No Tasks Completed"
-)
+@Preview(showBackground = true, name = "No Tasks Completed")
 @Composable
 private fun PlannerHomePreview1() {
     MaterialTheme {
@@ -97,16 +112,13 @@ private fun PlannerHomePreview1() {
                 totalTasks = 5,
                 completedTasks = 0
             ),
-            onCompleteTask = {}
+            onCompleteTask = {},
+            onTaskClick = {}
         )
     }
 }
 
-// Preview 2
-@Preview(
-    showBackground = true,
-    name = "All Tasks Completed"
-)
+@Preview(showBackground = true, name = "All Tasks Completed")
 @Composable
 private fun PlannerHomePreview2() {
     MaterialTheme {
@@ -116,8 +128,8 @@ private fun PlannerHomePreview2() {
                 totalTasks = 5,
                 completedTasks = 5
             ),
-            onCompleteTask = {}
+            onCompleteTask = {},
+            onTaskClick = {}
         )
     }
 }
-
