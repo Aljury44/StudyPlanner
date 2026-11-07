@@ -22,3 +22,13 @@ The interface is built with Jetpack Compose and uses a separate UI state to mana
 **Usage:** Used for guidance with Jetpack Compose implementation, understanding UI state, and resolving development issues.
 
 **Review and Testing:** The project files were reviewed, and the application was tested in Android Studio to verify its behavior.
+
+## Screenshots
+
+### Running Application
+![Home Screen - 3 Tasks Done](docs/Screenshots/HomeScreen_3Done.png)
+
+![Home Screen - All Tasks Done](docs/Screenshots/HomeScreen_5Done.png)
+
+### Compose Previews
+![Compose Previews](docs/Screenshots/ComposePreviews.png)
