@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -36,7 +35,6 @@ class MainActivity : ComponentActivity() {
                     startDestination = "home"
                 ) {
 
-                    // Lab 5 - Home screen
                     composable("home") {
                         Box(modifier = Modifier.fillMaxSize()) {
 
@@ -48,21 +46,31 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
 
-                            // Lab 6 button - always visible
-                            Button(
-                                onClick = {
-                                    navController.navigate("lab6")
-                                },
+                            Column(
                                 modifier = Modifier
                                     .align(Alignment.BottomCenter)
-                                    .padding(bottom = 24.dp)
+                                    .padding(bottom = 24.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text("Add Study Tasks ")
+                                Button(
+                                    onClick = {
+                                        navController.navigate("today")
+                                    }
+                                ) {
+                                    Text("Today's Tasks")
+                                }
+
+                                Button(
+                                    onClick = {
+                                        navController.navigate("lab6")
+                                    }
+                                ) {
+                                    Text("Add Study Tasks")
+                                }
                             }
                         }
                     }
 
-                    // Lab 5 - Task detail screen
                     composable(
                         route = "detail/{taskTitle}",
                         arguments = listOf(
@@ -72,10 +80,9 @@ class MainActivity : ComponentActivity() {
                         )
                     ) { backStackEntry ->
 
-                        val taskTitle =
-                            backStackEntry.arguments
-                                ?.getString("taskTitle")
-                                .orEmpty()
+                        val taskTitle = backStackEntry.arguments
+                            ?.getString("taskTitle")
+                            .orEmpty()
 
                         TaskDetailScreen(
                             taskTitle = taskTitle,
@@ -103,9 +110,12 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    // Lab 6 - Add a task screen
                     composable("lab6") {
                         StudyPlannerRoute()
+                    }
+
+                    composable("today") {
+                        TodayRoute()
                     }
                 }
             }
